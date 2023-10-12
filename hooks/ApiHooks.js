@@ -8,13 +8,15 @@ const useMedia = () => {
   const loadMedia = async () => {
     try {
       const json = await doFetch(apiUrl + 'media');
+      // console.log(json);
       const mediaFiles = await Promise.all(
         json.map(async (item) => {
-          const response = await fetch(apiUrl + 'media/' + item.file_id);
-          const fileData = await response.json();
+          const fileData = await doFetch(apiUrl + 'media/' + item.file_id);
+          // console.log('fileData', fileData);
           return fileData;
         }),
       );
+      // console.log(data);
       setMediaArray(mediaFiles);
     } catch (error) {
       console.error('loadMedia failed', error);
